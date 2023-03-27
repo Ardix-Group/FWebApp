@@ -27,7 +27,7 @@ export default function Profile() {
     useEffect(() => { if (currentUser?.photoURL) { setPhotoURL(currentUser.photoURL); }  }, [currentUser]);
 
     /* 📦 Referring to the upload file functions : 📦 */
-    function UploadNewPictureChange() { upload(photo, currentUser, setLoading); }
+    function UploadNewPicturePush() { upload(photo, currentUser, setLoading); }
     function UploadNewPictureChange(e) {
         if (e.target.files[0]) {
             setPhoto(e.target.files[0]);
@@ -77,13 +77,13 @@ export default function Profile() {
                 <>
                     <div className="fields">
                         <input type="file" onChange={UploadNewPictureChange}/>
-                        <button disabled={loading || !photo} onClick={UploadNewPictureChange}>Upload</button>
+                        <button disabled={loading || !photo} onClick={UploadNewPicturePush}>Upload</button>
                         <button onClick={RemovePhoto}>Remove your photo</button>
 
                         {error ? (
                             <img src="https://images.nightcafe.studio//assets/profile.png" alt="avatar" onError={() => setError(true)} className="avatar"/>
                         ) : (
-                            <img src={photoURL} alt="avatar" onError={() => setError(true)} className="avatar"/>
+                            <img width="150px" height="160px" style={{objectFit: "cover"}} src={photoURL} alt="avatar" onError={() => setError(true)} className="avatar"/>
                         )}
 
                         <div>Currently logged in as: {currentUser.email}</div>

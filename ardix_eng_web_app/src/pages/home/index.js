@@ -14,6 +14,7 @@ import { getStorage, ref, deleteObject } from "firebase/storage";
 import { logout, useAuth, upload } from "../config/FirebaseConfig.js";
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
+import UnknowPage from '../404.js';
 
 export default function Profile() {
     const storage = getStorage();
@@ -23,8 +24,11 @@ export default function Profile() {
     const [loading, setLoading] = useState(false);
     const [photoURL, setPhotoURL] = useState("https://images.nightcafe.studio//assets/profile.png");
     const [error, setError] = useState(false);
+
     /* ✨ The source link of the image of the user profile picture was replaced by the one of the actual Firebase's Database : ✨ */
-    useEffect(() => { if (currentUser?.photoURL) { setPhotoURL(currentUser.photoURL); }  }, [currentUser]);
+    useEffect(() => { 
+        if (currentUser?.photoURL) { setPhotoURL(currentUser.photoURL); }  
+    }, [currentUser]);
 
     /* 📦 Referring to the upload file functions : 📦 */
     function UploadNewPicturePush() { upload(photo, currentUser, setLoading); }
@@ -70,9 +74,7 @@ export default function Profile() {
                 <link rel="icon" href="/favicon.ico"/>
             </Head>
 
-            {!currentUser && 
-                <>vous n'êtes pas connecté</>
-            }
+            {!currentUser && <UnknowPage/>}
             {currentUser && 
                 <>
                     <div className="fields">

@@ -74,7 +74,7 @@ export default function Home() {
       <div className="ardix_indicator">
         <img src="https://zupimages.net/up/23/13/vzzn.png" alt="app_logo_source"/>
         <div className="whats_new">
-          <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <svg viewBox="0 0 24 24" fill="none" strokeLinecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
           <p>What's new on Ardix ? &nbsp;📣</p>
         </div>
       </div>
@@ -87,7 +87,7 @@ export default function Home() {
           <input className="fleid_input" ref={emailRefLogin} placeholder="Your personnal email..." type="text"/><br/>
           <input className="fleid_input" ref={passwordRefLogin} type="password" id="pass_one" placeholder="Your security password..."/><br/>
           <label><input className="eye_checkbox" type="checkbox" onClick={ShowPassword}/>Show actual password ! 👀</label>
-          <button disabled={loading} onClick={handleLogin}>Get started ! 🔑</button>
+          <button disabled={loading} onClick={handleLogin}>Get started !</button>
           <p className="other_page_link">You do not have an account ? <br/><a onClick={showSignupPage} href="#">Go to the registration page...</a></p>
         </div>
 
@@ -96,10 +96,10 @@ export default function Home() {
           <h1 className="welcome_title">Do you know Ardix ? ✨</h1>
           <p className="welcome_description">Here is the registration page to create a new account with the following form...</p>
           <input className="fleid_input" ref={emailRefSignup} placeholder="Your personnal email..." type="text"/><br/>
-          <input className="fleid_input" ref={nameRefSignup} placeholder="Your personnal first & last name (optionnal)..." type="text"/><br/>
+          <input className="fleid_input" type="text" ref={nameRefSignup} placeholder="Your first and/or last name..."/>
           <input className="fleid_input" ref={passwordRefSignup} type="password" id="pass_two" placeholder="Your security password..."/><br/>
           <label><input className="eye_checkbox" type="checkbox" onClick={ShowPassword}/>Show actual password ! 👀</label>
-          <button disabled={loading} onClick={handleSignup}>Register my account ! ⚙</button>
+          <button disabled={loading} onClick={handleSignup}>Register my account !</button>
           <p className="other_page_link">You do have already an account ? <br/><a onClick={showLoginPage} href="#">Go to the login page...</a></p>
         </div>
       </div>

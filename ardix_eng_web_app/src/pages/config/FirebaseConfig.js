@@ -29,8 +29,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const storage = getStorage();
 
-export function signup(email, password) {
-  return createUserWithEmailAndPassword(auth, email, password);
+export function signup(email, password, name) {
+  return createUserWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      return updateProfile(user, { displayName: name });
+    });
 }
 
 export function login(email, password) {

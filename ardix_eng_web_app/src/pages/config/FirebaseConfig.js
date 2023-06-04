@@ -64,6 +64,6 @@ export async function upload(file, currentUser, setLoading) {
   
   updateProfile(currentUser, {photoURL});
   setLoading(false);
-  alert("C'est bon : la photo est bien envoyé !");
+  alert("Tout est bon : ta photo a bien été enregistrée ! 👋");
   window.location.reload();
 }

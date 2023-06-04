@@ -35,15 +35,21 @@ export default function Profile() {
           }, 350, function() {
             $("#new-content").css("opacity", 1).fadeIn(300);
             $('#current-content').hide();
+            $(".popup-content").animate({
+                width: "500"
+            }, 300 );
           });
         });
       
-        $('#change-content-button2').click(function() {
+        $('#back_button').click(function() {
           $("#new-content").animate({
             opacity: 0
           }, 350, function() {
             $("#current-content").css("opacity", 1).fadeIn(300);
             $("#new-content").hide();
+            $(".popup-content").animate({
+                width: "350"
+            }, 300 );
           });
         });
     }      
@@ -54,11 +60,29 @@ export default function Profile() {
     }, [currentUser]);
 
     /* 📦 Referring to the upload file functions : 📦 */
-    function UploadNewPicturePush() { upload(photo, currentUser, setLoading); }
+    function UploadNewPicturePush() { 
+        upload(photo, currentUser, setLoading); 
+        $("#current-content").animate({
+            opacity: 0
+          }, 10, function() {
+            $("#new-content").css("opacity", 1).show();
+        });
+    }
+
     function UploadNewPictureChange(e) {
-        if (e.target.files[0]) {
-            setPhoto(e.target.files[0]);
-        } 
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            document.getElementById("profile_pic").src = event.target.result;
+        }
+
+        reader.readAsDataURL(e.target.files[0]);
+        if (e.target.files[0]) { setPhoto(e.target.files[0]) }; 
+
+        $("#current-content").animate({
+            opacity: 0
+          }, 10, function() {
+            $("#new-content").css("opacity", 1).show();
+        });
     }
 
     /* 💨 Simple function to Logout the actual user (in browser cookies) : 💨 */
@@ -78,11 +102,11 @@ export default function Profile() {
         const desertRef = ref(storage, photoURL);
         if (currentUser?.photoURL) {
             deleteObject(desertRef).then(() => {
-                alert("Ta photo a bien été supprimé !");
+                alert("Ta photo a bien été supprimé ! 👋");
                 window.location.reload();
             })
         } else {
-            alert("On peut pas supprimer ta photo de profil, tu en as pas ! Mets en une et on verra après !")
+            alert("On ne peut pas supprimer ta photo de profil : tu en as pas ! Mets en une et on verra après ! 🧐")
         }
     }
 
@@ -98,34 +122,27 @@ export default function Profile() {
             {!currentUser && <UnknowPage/>}
             {currentUser && 
                 <>
-                    {/* <div>
-                        <input type="file" onChange={UploadNewPictureChange}/>
-                        <button disabled={loading || !photo} onClick={UploadNewPicturePush}>Upload</button>
-                        <button onClick={RemovePhoto}>Remove your photo</button>
-                        {error ? (
-                            <img src="https://images.nightcafe.studio//assets/profile.png" alt="avatar" onError={() => setError(true)} className="avatar"/>
-                        ) : (
-                            <img width="150px" height="160px" style={{objectFit: "cover"}} src={photoURL} alt="avatar" onError={() => setError(true)} className="avatar"/>
-                        )}
-
-                        <button disabled={loading} onClick={Logout}>Log Out</button>
-                    </div> */}
-
                     <div id="main_box">
                         <div className="navbar">
                             <img className="app_logo" src="https://zupimages.net/up/23/13/vzzn.png" alt="logo"/>
                             {error ? (
-                                <a href="#user_popup"><img src="https://images.nightcafe.studio//assets/profile.png" alt="avatar" onError={() => setError(true)} className="avatar"/></a>
+                                <a href="#user_popup">
+                                    <div className="icon_arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                                    <img src="https://images.nightcafe.studio//assets/profile.png" alt="avatar" onError={() => setError(true)} className="avatar"/>
+                                </a>
                             ) : (
-                                <a href="#user_popup"><img style={{objectFit: "cover"}} src={photoURL} alt="avatar" onError={() => setError(true)} className="avatar"/></a>
+                                <a href="#user_popup">
+                                    <div className="icon_arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
+                                    <img style={{objectFit: "cover"}} src={photoURL} alt="avatar" onError={() => setError(true)} className="avatar"/>
+                                </a>
                             )}
 
                             {/* 📦 Action Icon Bar : 📦 */}
-                            <div className="top_action_bar">
-                                <p title="Boîte de réception !"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" className="feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></p>
-                                <p title="Centre des notifications..."><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" className="feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></p>
-                                <p title="Recherchez quelque chose !"><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" className="feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></p>
-                            </div>
+                            {/* <div className="top_action_bar">
+                                <p title="Boîte de réception !"><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="feather-message-circle"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg></p>
+                                <p title="Centre des notifications..."><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="feather-bell"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></p>
+                                <p title="Recherchez quelque chose !"><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round" className="feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg></p>
+                            </div> */}
 
                             <div id="user_popup" className="popup-container">
                                 <div className="popup-content">
@@ -133,7 +150,7 @@ export default function Profile() {
 
                                     <div className="infos-box">
                                         <div className="content" id="current-content">
-                                            <div class="image-container">
+                                            <div className="image-container">
                                                 {error ? (
                                                 <img src="https://images.nightcafe.studio//assets/profile.png" alt="avatar" onError={() => setError(true)} className="user_pic"/>
                                                 ) : (
@@ -146,28 +163,49 @@ export default function Profile() {
                                             <h1>{currentUser.displayName}</h1>
                                             <span>Id : {currentUser.uid}</span>
 
-                                            <div className="followers_count" title="Ces chiffres sont p(our l'instant) tous fictifs ! ⛔">
+                                            <div className="followers_count" title="Ces chiffres sont (pour l'instant) tous fictifs ! ⛔">
                                                 <div className="item"><h1>12.5 K</h1><p>Followers</p></div>
                                                 <div className="item"><h1>20</h1><p>Posts</p></div>
-                                            </div>
-                                            <button class="menu_button">
-                                                <svg stroke-linecap="round" stroke-linejoin="round" class="icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                            </div>  
+                                            <button className="menu_button">
+                                                <svg strokeLinecap="round" strokeLinejoin="round" className="icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                                                 <p className="text">My favorite posts</p>
                                             </button>
-                                            <button id="personnal_settings" class="menu_button">
-                                                <svg stroke-linecap="round" stroke-linejoin="round" class="icon"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                                            <button id="personnal_settings" className="menu_button">
+                                                <svg strokeLinecap="round" strokeLinejoin="round" className="icon"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                                                 <p className="text">Personnal settings</p>
                                             </button>
-                                            <button disabled={loading} onClick={Logout} class="menu_button">
-                                                <svg className="icon" viewBox="0 0 24 24" troke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                                            <button disabled={loading} onClick={Logout} className="menu_button">
+                                                <svg className="icon" viewBox="0 0 24 24" troke-linecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                                                 <p className="text">Logout</p>
                                             </button>
                                         </div>
 
                                         <div id="new-content">
-                                            <p>coucou</p><br/><br/>
-                                            <button id="change-content-button2" class="menu_button">
-                                                <svg stroke-linecap="round" stroke-linejoin="round" class="icon"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                                            <div className="avatar_box">
+                                                {error ? (
+                                                    <img src="https://images.nightcafe.studio//assets/profile.png" alt="avatar" onError={() => setError(true)} id="profile_pic"/>
+                                                ) : (
+                                                    <img style={{objectFit: "cover"}} src={photoURL} alt="avatar" onError={() => setError(true)} id="profile_pic"/>
+                                                )}
+                                                <div className="pic_icon"><img src="https://cdn-icons-png.flaticon.com/512/158/158715.png"/></div>
+                                            </div>
+
+                                            <input type="file" /* accept=".jpg,.png,.jpeg" */ name="file" id="file" className="upload_new_picture" onChange={UploadNewPictureChange}/>
+                                            <label htmlFor="file">Choose a new user picture ! 📸</label><br/><br/>
+
+                                            <button className="menu_button" id="confirm_button" disabled={loading || !photo} onClick={UploadNewPicturePush}>
+                                                <svg strokeLinecap="round" strokeLinejoin="round" className="icon"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                                                <p className="text">Confirm your new picture...</p>
+                                            </button>
+
+                                            <button className="menu_button" onClick={RemovePhoto}>
+                                                <svg strokeLinecap="round" stroke="red" strokeLinejoin="round" className="icon"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                                                <p className="text"><font color="red">Remove your profile picture !</font></p>
+                                            </button>
+                                            
+                                            <button id="back_button" className="menu_button">
+                                                <svg strokeLinecap="round" strokeLinejoin="round" className="icon"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                                                 <p className="text">Back to user's menu !</p>
                                             </button>
                                         </div>

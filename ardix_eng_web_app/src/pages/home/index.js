@@ -27,7 +27,7 @@ export default function Profile() {
     const [error, setError] = useState(false);
 
     if (typeof document !== 'undefined') {
-        $( document ).ready(function() {
+        $(document).ready(function() {
             $("#new-content").css("display", "none").hide();
       
             $('#personnal_settings').click(function() {
@@ -55,6 +55,25 @@ export default function Profile() {
             });
         });
     }      
+
+    /* 📦 Focus Function Input add post/modal : 📦 */
+    function setFocus(on) {
+        var element = document.activeElement;
+        if (on) {
+          setTimeout(function () {
+            element.parentNode.classList.add("focus");
+          });
+        } else {
+          let box = document.querySelector(".input-box");
+          box.classList.remove("focus");
+          $("input").each(function () {
+            var $input = $(this);
+            var $parent = $input.closest(".input-box");
+            if ($input.val()) $parent.addClass("focus");
+            else $parent.removeClass("focus");
+          });
+        }
+    }
 
     /* ✨ The source link of the image of the user profile picture was replaced by the one of the actual Firebase's Database : ✨ */
     useEffect(() => { 
@@ -87,7 +106,7 @@ export default function Profile() {
         });
     }
 
-    /* 💨 Simple function to Logout the actual user (in browser cookies) : 💨 */
+    /* 💨 Simple function to Logout(); the actual user (in browser cookies) : 💨 */
     async function Logout() {
         setLoading(true);
         try {
@@ -99,7 +118,7 @@ export default function Profile() {
         push('/');
     }
 
-    /* 🔴 Function to remove the actual user profile picture : 🔴 */
+    /* ⛔ Function to remove the actual user profile picture : ⛔ */
     function RemovePhoto() {
         const desertRef = ref(storage, photoURL);
         if (currentUser?.photoURL) {
@@ -139,9 +158,43 @@ export default function Profile() {
                                     <div className="icon_arrow"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg></div>
                                     <img style={{objectFit: "cover"}} src={photoURL} alt="avatar" onError={() => setError(true)} className="avatar"/>
                                 </a>
-                            )}
+                            )} 
+                            
+                            <button id="notif_button"><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg></button>
+                            
+                            {/* 💫 Add post button : 💫 */}
+                            <a href="#add_post_popup">
+                                <button id="plus_button">
+                                    <svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <p>Add a new post</p>
+                                </button>
+                            </a>
 
-                            <div id="user_popup" className="popup-container">
+                            {/* 💫 Add post modal/popup : 💫 */}
+                            <div id="add_post_popup" className="add_post_popup">
+                                <div className="popup-content2">
+                                    <a href="#" className="close">&times;</a>
+                                    <h1 className="title"><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Add a new post :</h1>
+                                    <p className="description">Here is a popup allowing you to create a new post in the section/channel you want. Any post may be removed after his publication. This post must also comply with <a href="#">our terms of use and respect</a> and <a href="#">the privacy of others</a>.</p>
+                                
+                                    <h2 className="background"><span>Choose a channel :</span></h2> 
+                                    <h2 className="background"><span>Add some informations :</span></h2> 
+                                    <p className="description">Here is a form allowing you to fill in all the essential information concerning your publication.</p>
+
+                                    <div className="input-box">
+                                        <label className="input-label">Write your title...</label>
+                                        <input type="text" className="input-1" onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}/>
+                                    </div>
+                                    <div className="input-box">
+                                        <label className="input-label">Write your description...</label>
+                                        <input type="text" className="input-1" onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}/>
+                                    </div>
+
+                                    <button className="send_your_post">Send your publication online !</button>
+                                </div>
+                            </div>
+                            
+                            <div id="user_popup" className="new_user_popup">
                                 <div className="popup-content">
                                     <a href="#" className="close">&times;</a>
 

@@ -29,6 +29,7 @@
     font-size: 12px;
     font-weight: 500;
     margin: 7px 10px;
+    position: absolute;
 }
 
 /* 🎲 All Navbar Style : 🎲 */
@@ -41,14 +42,74 @@
     margin: 42px 30px 0px 30px;
     border-radius: 60px;
     box-shadow: 2px 10px 100px rgb(230, 230, 230);
-    position: fixed;
-    width: 95%;
+    /* position: fixed;
+    width: 95%; */
 }
 
 #main_box .navbar .app_logo {
     width: 65px;
     margin-left: 3px;
 }
+
+#main_box .navbar #plus_button {
+    float: right;
+    background-color: rgba(243, 243, 243, 0.933);
+    border-color: transparent;
+    margin-right: 12px;
+    width: 170px;
+    padding-top: 7px;
+    padding-bottom: 9px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+    margin-top: 7px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#main_box .navbar #plus_button:hover { transform: scale(1.05); }
+#main_box .navbar #plus_button:active { transform: scale(0.95); }
+
+#main_box .navbar #plus_button svg {
+    width: 27px;
+    height: 27px;
+    stroke-width: 1.5px;
+    stroke: rgb(104, 98, 98);
+    fill: none;
+    float: left;
+}
+
+#main_box .navbar #plus_button p {
+    margin-top: 6px;
+    font-size: 13px;
+}
+
+#main_box .navbar #notif_button {
+    float: right;
+    background-color: rgba(243, 243, 243, 0.933);
+    border-color: transparent;
+    margin-right: 20px;
+    padding-top: 7px;
+    padding-bottom: 9px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 15px;
+    margin-top: 7px;
+    cursor: pointer;
+    transition: all 0.5s;
+}
+
+#main_box .navbar #notif_button svg {
+    width: 25px;
+    height: 25px;
+    stroke-width: 1.5px;
+    stroke: rgb(104, 98, 98);
+    fill: none;
+    float: left;
+}
+
+#main_box .navbar #notif_button:hover { transform: scale(1.05); }
+#main_box .navbar #notif_button:active { transform: scale(0.95); }
 
 #main_box .navbar .avatar {
     width: 45px;
@@ -91,11 +152,187 @@
     height: 25px;
     stroke-width: 2px;
     fill: none;
-}   
+}
 /* 🎲 End of all Navbar Style : 🎲 */
 
+/* 💫 Add post modal/popup : 💫 */
+.add_post_popup {
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+    transform: scale(1.3);
+    position: fixed;
+    z-index: 200;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(21, 17, 17, 0.61);
+}
+
+.add_post_popup .popup-content2 {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 35px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    border-radius: 25px;
+    margin-top: 5%;
+    width: 60%;
+}
+
+.add_post_popup .popup-content2 .title {
+    font-size: 40px;
+}
+
+.add_post_popup .popup-content2 .title svg {
+    width: 20px;
+    height: 20px;
+    stroke: rgb(97, 93, 93);
+    stroke-width: 2px;
+    fill: none;
+}
+
+.add_post_popup .popup-content2 .description {
+    color: rgb(97, 93, 93);
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+.add_post_popup .popup-content2 .description a { color: #1a73e8; }
+.add_post_popup .popup-content2 .close:hover { color: black; }
+
+.input-box.active-grey .input-1 {
+    border: 1px solid #dadce0;
+}
+
+.input-box.active-grey .input-label {
+    color: #80868b;
+    top: -8px;
+    background: #fff;
+    font-size: 11px;
+    transition: 250ms;
+}
+
+.input-box.active-grey .input-label svg {
+    position: relative;
+    width: 11px;
+    height: 11px;
+    top: 2px;
+    transition: 250ms;
+}
+  
+.input-box {
+    position: relative;
+    margin: 15px 0;
+}
+
+.input-box .input-label {
+    position: absolute;
+    color: #80868b;
+    font-size: 16px;
+    font-weight: 400;
+    max-width: calc(100% - (2 * 8px));
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    left: 25px;
+    top: 13px;
+    padding: 0 8px;
+    transition: 250ms;
+    user-select: none;
+    pointer-events: none;
+}
+
+.input-box .input-1 {
+    box-sizing: border-box;
+    height: 50px;
+    width: 100%;
+    border-radius: 20px;
+    color: #202124;
+    border: 1px solid #dadce0;
+    padding: 13px 15px;
+    transition: 250ms;
+}
+
+.input-box .input-1:focus {
+    outline: none;
+    border: 2px solid #1a73e8;
+    transition: 250ms;
+}
+  
+.input-box.focus .input-label,
+.input-box.active .input-label {
+    color: #1a73e8;
+    top: -8px;
+    background: #fff;
+    font-size: 11px;
+    transition: 250ms;
+    padding-left: 20px;
+}
+
+.add_post_popup .popup-content2 .close {
+    color: rgba(21, 17, 17, 0.61);
+    text-decoration: none;
+    font-size: 35px;
+    float: right;
+    margin-right: -20px;
+    margin-top: -32px;
+}
+
+.add_post_popup:target {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+h2.background {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    margin-top: 30px;
+    margin-left: 15px;
+    width: 95%;
+    font-size: 30px;
+    margin-bottom: 5px;
+}
+
+h2.background:before {
+    border-top: 2px solid #dfdfdf;
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    z-index: -1;
+}
+
+h2.background span {
+    background: #fff;
+    padding: 0 15px;
+}
+
+.send_your_post {
+    background-color: #1a73e8;
+    width: 100%;
+    color: white;
+    border-radius: 25px;
+    border-color: transparent;
+    padding-top: 15px;
+    padding-bottom: 17px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.4s;
+}
+
+.send_your_post:hover { transform: scale(1.02); }
+.send_your_post:active { transform: scale(0.99); }
+/* 💫 End of add post modal/popup ! 💫 */
+
 /* 👨‍👧‍👦 All popup's user style : 👨‍👧‍👦 */
-.popup-container {
+.new_user_popup {
     visibility: hidden;
     opacity: 0;
     transition: all 0.2s ease-in-out;
@@ -111,17 +348,17 @@
     align-items: center;
 }
 
-.popup-content {
+.new_user_popup .popup-content {
     background-color: #fefefe;
     margin: auto;
     padding: 45px;
     padding-bottom: 15px;
     border-radius: 25px;
-    margin-top: 8%;
+    margin-top: 5.5%;
     width: 350px;
 }  
 
-.popup-content .close {
+.new_user_popup .popup-content .close {
     color: rgba(21, 17, 17, 0.61);
     text-decoration: none;
     font-size: 35px;
@@ -130,21 +367,21 @@
     margin-top: -45px;
 }
 
-.popup-content .close:hover { color: black; }
-.popup-container:target{
+.new_user_popup .popup-content .close:hover { color: black; }
+.new_user_popup:target{
     visibility: visible;
     opacity: 1;
     transform: scale(1);
 }
 
-.popup-content .image-container {
+.new_user_popup .popup-content .image-container {
     position: relative;
     justify-content: center;
     display: flex;
     margin-bottom: 11px;
 }
   
-.popup-content .image-container img {
+.new_user_popup .popup-content .image-container img {
     display: block;
     width: 110px; 
     height: 110px; 
@@ -152,7 +389,7 @@
     border-radius: 50%;
 }
   
-.popup-content .image-container .circle-image {
+.new_user_popup .popup-content .image-container .circle-image {
     position: absolute;
     margin-left: 80px;
     margin-top: 70px;
@@ -161,7 +398,7 @@
     background-color: white;
 }  
 
-.popup-content .image-container .verif_tag_img {
+.new_user_popup .popup-content .image-container .verif_tag_img {
     width: 30px;
     height: 30px;
     position: absolute;
@@ -169,20 +406,20 @@
     margin-left: 80px;
 }
 
-.popup-content .infos-box {
+.new_user_popup .popup-content .infos-box {
     text-align: center;
 }
 
-.popup-content .infos-box h1 {
+.new_user_popup .popup-content .infos-box h1 {
     font-size: 25px;
 }
 
-.popup-content .infos-box span {
+.new_user_popup .popup-content .infos-box span {
     color: gray;
     font-size: 14px;
 }
 
-.popup-content .infos-box .followers_count {
+.new_user_popup .popup-content .infos-box .followers_count {
     margin-top: 25px;
     display: flex;
     justify-content: center;
@@ -190,16 +427,16 @@
     margin-bottom: 30px;
 }
 
-.popup-content .infos-box .followers_count .item {
+.new_user_popup .popup-content .infos-box .followers_count .item {
     margin-right: 35px;
 }
 
-.popup-content .infos-box .followers_count .item p {
+.new_user_popup .popup-content .infos-box .followers_count .item p {
     color: gray;
     font-size: 15px;
 }
 
-.popup-content .infos-box .menu_button {
+.new_user_popup .popup-content .infos-box .menu_button {
     color: black;
     stroke: rgb(63, 63, 63);
     width: 100%;
@@ -217,10 +454,10 @@
     backdrop-filter: blur(10px);
 }
 
-.popup-content .infos-box .menu_button:hover { transform: scale(1.03); }
-.popup-content .infos-box .menu_button:active { transform: scale(0.98); }
+.new_user_popup .popup-content .infos-box .menu_button:hover { transform: scale(1.03); }
+.new_user_popup .popup-content .infos-box .menu_button:active { transform: scale(0.98); }
 
-.popup-content .infos-box .menu_button svg {
+.new_user_popup .popup-content .infos-box .menu_button svg {
     width: 25px;
     height: 25px;
     fill: none;
@@ -229,7 +466,7 @@
     margin-left: -5px;
 }
 
-.popup-content .infos-box .menu_button p {
+.new_user_popup  .popup-content .infos-box .menu_button p {
     margin-left: 30px;
     font-size: 15px;
     margin-top: -24.5px;

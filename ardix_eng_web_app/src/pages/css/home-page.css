@@ -15,9 +15,20 @@
     grid-template-rows: repeat(5, 1fr);
     grid-column-gap: 0px;
     grid-row-gap: 0px;
-    background-color: rgb(242, 242, 242);
-    height: 100vh;
-    padding-bottom: 40px;
+    background-color: rgba(243, 243, 243, 0.933);
+    padding-bottom: 0px;
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+#main_box .connected_status {
+    color: rgb(16, 183, 16);
+    font-size: 12px;
+    font-weight: 500;
+    margin: 7px 10px;
 }
 
 /* 🎲 All Navbar Style : 🎲 */
@@ -26,18 +37,24 @@
     padding: 20px;
     padding-left: 30px;
     background-color: white;
-    height: 70px;
+    height: 60px;
+    margin: 42px 30px 0px 30px;
+    border-radius: 60px;
+    box-shadow: 2px 10px 100px rgb(230, 230, 230);
+    position: fixed;
+    width: 95%;
 }
 
 #main_box .navbar .app_logo {
-    width: 70px;
+    width: 65px;
+    margin-left: 3px;
 }
 
 #main_box .navbar .avatar {
     width: 45px;
-    margin-top: 10px;
-    float: right;
     height: 45px;
+    margin-top: 5px;
+    float: right;
     border-radius: 50%;
     object-fit: cover;
     margin-right: 25px;
@@ -62,9 +79,9 @@
     padding: 5px;
     border-radius: 50%;
     float: right;
-    margin-left: -80px;
+    margin-left: -100px;
     position: relative;
-    margin-top: 30px;
+    margin-top: 25px;
     z-index: 20;
 }
 
@@ -74,40 +91,7 @@
     height: 25px;
     stroke-width: 2px;
     fill: none;
-}
-
-#main_box .navbar .top_action_bar {
-    float: right;
-    margin-right: 10px;
-}
-
-#main_box .navbar .top_action_bar p {
-    float: left;
-}
-
-#main_box .navbar .top_action_bar p svg {
-    fill: none;
-    stroke: white;
-    width: 25px;
-    height: 25px;
-    background-color: rgb(42, 42, 42);
-    stroke-width: 2;
-    padding: 8px;
-    margin-right: 10px;
-    margin-top: 15px;
-    border-radius: 30px;
-    cursor: pointer;
-}
-
-#main_box .navbar .top_action_bar p svg:hover {
-    transition: all 0.3s;
-    transform: scale(1.05);
-}
-
-#main_box .navbar .top_action_bar p svg:active {
-    transition: all 0.3s;
-    transform: scale(0.95);
-}
+}   
 /* 🎲 End of all Navbar Style : 🎲 */
 
 /* 👨‍👧‍👦 All popup's user style : 👨‍👧‍👦 */
@@ -233,7 +217,7 @@
     backdrop-filter: blur(10px);
 }
 
-.popup-content .infos-box .menu_button:hover { transform: scale(1.05); }
+.popup-content .infos-box .menu_button:hover { transform: scale(1.03); }
 .popup-content .infos-box .menu_button:active { transform: scale(0.98); }
 
 .popup-content .infos-box .menu_button svg {

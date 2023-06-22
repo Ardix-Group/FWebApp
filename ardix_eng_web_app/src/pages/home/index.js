@@ -16,6 +16,9 @@ import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import UnknowPage from '../404.js';
 import $ from 'jquery';
+import axios from 'axios';
+import { getFirestore } from 'firebase/firestore';
+import { doc, setDoc } from "firebase/firestore";
 
 export default function Profile() {
     const storage = getStorage();
@@ -25,7 +28,25 @@ export default function Profile() {
     const [loading, setLoading] = useState(false);
     const [photoURL, setPhotoURL] = useState("https://images.nightcafe.studio//assets/profile.png");
     const [error, setError] = useState(false);
+    const [valueTitle, setValueTitle] = useState('');
+    const [valueDescription, setValueDescription] = useState('');
+    const [data, setData] = useState(null);
+    const db = getFirestore();
 
+    /* ✨ Read test all data in the collection name indicated : ✨ */
+    useEffect(() => {
+        const getAllPost = async () => {
+          try {
+            const response = await axios.get('/api/get_post');
+            setData(response.data);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+    
+        getAllPost();
+    }, []);
+    
     if (typeof document !== 'undefined') {
         $(document).ready(function() {
             $("#new-content").css("display", "none").hide();
@@ -54,7 +75,24 @@ export default function Profile() {
             });
             });
         });
-    }      
+    }  
+    
+    /* 📦 Post function with Firestore Firebase : 📦 */
+    const handleChangeTitle = (event) => { setValueTitle(event.target.value); };
+    const handleChangeDescription = (event) => { setValueDescription(event.target.value); };
+
+    /* 📋 Generate one ID for the post : 📋 */
+    function generateId() { var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'; var id = ''; for (var i = 0; i < 20; i++) { var randomIndex = Math.floor(Math.random() * chars.length); id += chars.charAt(randomIndex); } return id; }
+    async function createPost() {
+        var generatedId = generateId();
+        const data = {
+            title: valueTitle,
+            description: valueDescription
+        };
+      
+        await setDoc(doc(db, "post", generatedId), data);
+        window.location.reload();
+    }
 
     /* 📦 Focus Function Input add post/modal : 📦 */
     function setFocus(on) {
@@ -83,11 +121,6 @@ export default function Profile() {
     /* 📦 Referring to the upload file functions : 📦 */
     function UploadNewPicturePush() { 
         upload(photo, currentUser, setLoading); 
-        $("#current-content").animate({
-            opacity: 0
-          }, 10, function() {
-            $("#new-content").css("opacity", 1).show();
-        });
     }
 
     function UploadNewPictureChange(e) {
@@ -177,20 +210,20 @@ export default function Profile() {
                                     <h1 className="title"><svg viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><line x1="9" y1="15" x2="15" y2="15"></line></svg> Add a new post :</h1>
                                     <p className="description">Here is a popup allowing you to create a new post in the section/channel you want. Any post may be removed after his publication. This post must also comply with <a href="#">our terms of use and respect</a> and <a href="#">the privacy of others</a>.</p>
                                 
-                                    <h2 className="background"><span>Choose a channel :</span></h2> 
+                                    {/* <h2 className="background"><span>Choose a channel :</span></h2>  */}
                                     <h2 className="background"><span>Add some informations :</span></h2> 
                                     <p className="description">Here is a form allowing you to fill in all the essential information concerning your publication.</p>
 
                                     <div className="input-box">
                                         <label className="input-label">Write your title...</label>
-                                        <input type="text" className="input-1" onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}/>
+                                        <input type="text" value={valueTitle} className={focus ? 'input-1 focus' : 'input-1'} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} onChange={handleChangeTitle}/>
                                     </div>
                                     <div className="input-box">
                                         <label className="input-label">Write your description...</label>
-                                        <input type="text" className="input-1" onFocus={() => setFocus(true)} onBlur={() => setFocus(false)}/>
+                                        <input type="text" value={valueDescription} className={focus ? 'input-1 focus' : 'input-1'} onFocus={() => setFocus(true)} onBlur={() => setFocus(false)} onChange={handleChangeDescription}/>
                                     </div>
 
-                                    <button className="send_your_post">Send your publication online !</button>
+                                    <button onClick={createPost} className="send_your_post">Send your publication online !</button>
                                 </div>
                             </div>
                             
@@ -259,19 +292,25 @@ export default function Profile() {
                                                 <p className="text">Back to user's menu !</p>
                                             </button>
                                         </div>
+
+                                        {loading && (
+                                            <div id="loading_div">
+                                                <svg className="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+                                                    <circle className="path" fill="none" strokeWidth="6" strokeLinecap="round" cx="33" cy="33" r="30"></circle>
+                                                </svg>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        {/* <div className="news_feed">
-                            <p>• Ici, un <i>news feed</i> connecté au bot disponible plus tard sur le serveur Discord Officiel ! 👋</p>
-                            <p>• Avec le suivi des logs les + importants du serveur Discord Officiel... 📋</p>
-                        </div>
-
-                        <div className="content_box">
-                            <p>• Ici, sera afficher tous les posts récents sous forme d'un fil d'actu avec un infinity-scrolling ! 😎</p>
-                        </div> */}
+                        {data && data.map((item, index) => (
+                            <div className="showing_box" key={index}>
+                                <p>{item.title}</p>
+                                <p>{item.description}</p>
+                            </div>
+                        ))}
                     </div>
                 </>
             }

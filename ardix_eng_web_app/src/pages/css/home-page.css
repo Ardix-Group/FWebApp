@@ -35,10 +35,11 @@
 /* 🎲 All Navbar Style : 🎲 */
 #main_box .navbar {
     grid-area: 1 / 1 / 2 / 7;
-    padding: 20px;
+    padding-top: 20px;
     padding-left: 30px;
+    padding-right: 20px;
     background-color: white;
-    height: 60px;
+    height: 80px;
     margin: 42px 30px 0px 30px;
     border-radius: 60px;
     box-shadow: 2px 10px 100px rgb(230, 230, 230);
@@ -551,24 +552,93 @@ h2.background span {
 .upload_new_picture + label:hover {
     transform: scale(1.05);
 }
+
+.spinner {
+    width: 40px;
+    margin-bottom: 25px;
+    -webkit-animation: rotator 1.4s linear infinite;
+            animation: rotator 1.4s linear infinite;
+}
+  
+@-webkit-keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+}
+  
+@keyframes rotator {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(270deg);
+    }
+}
+
+.path {
+    stroke-dasharray: 187;
+    stroke-dashoffset: 0;
+    transform-origin: center;
+    -webkit-animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+            animation: dash 1.4s ease-in-out infinite, colors 5.6s ease-in-out infinite;
+}
+  
+@keyframes colors {
+    0% {
+      stroke: #4285F4;
+    }
+    25% {
+      stroke: #4285F4;
+    }
+    50% {
+      stroke: #4285F4;
+    }
+    75% {
+      stroke: #4285F4;
+    }
+    100% {
+      stroke: #4285F4;
+    }
+}
+  
+@-webkit-keyframes dash {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+    }
+}
+ 
+@keyframes dash {
+    0% {
+      stroke-dashoffset: 187;
+    }
+    50% {
+      stroke-dashoffset: 46.75;
+      transform: rotate(135deg);
+    }
+    100% {
+      stroke-dashoffset: 187;
+      transform: rotate(450deg);
+    }
+}
 /* 👨‍👧‍👦 End of All popup's user style : 👨‍👧‍👦 */
 
-#main_box .content_box {
-    grid-area: 2 / 1 / 6 / 5;
+/* 🛒 Content page style : 🛒 */
+#main_box .showing_box {
     background-color: white;
+    margin-left: 30px;
     padding: 25px;
-    margin-left: 20px;
-    margin-top: -5%;
+    margin-top: -40px;
     border-radius: 25px;
 }
-
-#main_box .news_feed {
-    grid-area: 2 / 6 / 6 / 5;
-    border-radius: 25px;
-    padding: 25px;
-    margin-left: 20px;
-    margin-right: 30px;
-    margin-bottom: 20px;
-    margin-top: -20%;
-    background-color: white;
-}
+/* 🛒 End of Content page style ! 🛒 */

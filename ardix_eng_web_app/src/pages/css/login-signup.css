@@ -104,7 +104,7 @@ label {
     vertical-align: bottom;
     position: relative;
     top: -1px;
-    *overflow: hidden;
+    overflow: hidden;
     margin-right: 5px;
 }
 

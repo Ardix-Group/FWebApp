@@ -10,24 +10,25 @@
 */
 
 import { useEffect, useState } from "react";
-import { initializeApp } from "firebase/app";
+import * as firebase from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 /* 🦊 Firebase Variables Initial Config : 🦊 */
 const firebaseConfig = {
-  apiKey: "AIzaSyAT6BA3pw_4BkMLXv9eFhGmESrxDCoilho",
-  authDomain: "ardix-project.firebaseapp.com",
-  projectId: "ardix-project",
-  storageBucket: "ardix-project.appspot.com",
-  messagingSenderId: "115388994394",
-  appId: "1:115388994394:web:98c6da882e4660454bd963",
-  measurementId: "G-SYYHL9D6YV"
+  apiKey: "AIzaSyC9xkiO8fFVUjJBaB3UsHnUWmq_P5xi8Gk",
+  authDomain: "ardix-group-2.firebaseapp.com",
+  projectId: "ardix-group-2",
+  storageBucket: "ardix-group-2.appspot.com",
+  messagingSenderId: "991834990652",
+  appId: "1:991834990652:web:59f26ada6a7a9d3c72fb39",
+  measurementId: "G-FJ1PVJ65YL"
 };
 
-const app = initializeApp(firebaseConfig);
+const app = firebase.initializeApp(firebaseConfig);
 const auth = getAuth();
 const storage = getStorage();
+export default app;
 
 export function signup(email, password, name) {
   return createUserWithEmailAndPassword(auth, email, password)
@@ -58,7 +59,6 @@ export function useAuth() {
 export async function upload(file, currentUser, setLoading) {
   const fileRef = ref(storage, currentUser.uid, + '.png');
   setLoading(true);
-
   const snapshot = await uploadBytes(fileRef, file);
   const photoURL = await getDownloadURL(fileRef);
   

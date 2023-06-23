@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import UnknowPage from '../404.js';
 import $ from 'jquery';
 import axios from 'axios';
+import { getFirestore } from 'firebase/firestore';
 import { doc, setDoc } from "firebase/firestore";
 
 export default function Profile() {
@@ -30,6 +31,7 @@ export default function Profile() {
     const [valueTitle, setValueTitle] = useState('');
     const [valueDescription, setValueDescription] = useState('');
     const [data, setData] = useState(null);
+    const db = getFirestore();
     const [imageDataURLs, setImageDataURLs] = useState([]);
     const [fileNames, setFileNames] = useState([]);
     const [uploading, setUploading] = useState(false);
@@ -84,7 +86,7 @@ export default function Profile() {
     
     if (typeof document !== 'undefined') {
         $(document).ready(function() {
-            $("#new-content").css("display", "none").hide();
+            $("#new-content").hide();
       
             $('#personnal_settings').click(function() {
             $("#current-content").animate({

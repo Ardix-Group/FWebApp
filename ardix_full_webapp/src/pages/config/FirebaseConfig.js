@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 import * as firebase from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
-import { getFirestore } from 'firebase/firestore';
 
 /* 🦊 Firebase Variables Initial Config : 🦊 */
 const firebaseConfig = {
@@ -29,7 +28,6 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const auth = getAuth();
 const storage = getStorage();
-const db = getFirestore();
 export default app;
 
 export function signup(email, password, name) {

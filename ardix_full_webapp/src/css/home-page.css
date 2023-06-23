@@ -112,6 +112,58 @@
 #main_box .navbar #notif_button:hover { transform: scale(1.05); }
 #main_box .navbar #notif_button:active { transform: scale(0.95); }
 
+.MuiDrawer-paperAnchorRight {
+    width: 410px;
+    padding: 30px;
+    padding-left: 40px;
+}
+
+.MuiTab-textColorPrimary {
+    text-transform: capitalize!important;
+    font-family: 'Inter', sans-serif!important;
+}
+
+.title_panel {
+    font-weight: 700;
+    margin-top: -30px;
+}
+
+.description_panel {
+    color: #666666;
+    font-size: 14px;
+    margin-bottom: 25px;
+    margin-top: 5px;
+}
+
+.close_panel {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: 35px;
+    margin-left: 385px;
+    margin-top: -28px;
+    cursor: pointer;
+    width: 50px;
+    margin-bottom: 15px;
+    color: gray;
+}
+
+.close_panel:hover { color: black; }
+.notif_list_item {
+    margin: -30px!important;
+    margin-top: -15px!important;
+}
+
+.notif_list_item .notif_item {
+    border-radius: 25px;
+    padding-bottom: 15px;
+    transition: all 0.7s;
+    cursor: pointer;
+}
+
+.notif_list_item .notif_item:hover {
+    background-color: rgb(231, 231, 231);
+}
+
 #main_box .navbar .avatar {
     width: 45px;
     height: 45px;

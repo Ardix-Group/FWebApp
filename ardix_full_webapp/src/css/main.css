@@ -1,0 +1,36 @@
+/* 
+       e                   888 ,e,                 e88~~\                                     
+      d8b     888-~\  e88~\888  "  Y88b  /        d888     888-~\  e88~-_  888  888 888-~88e  
+     /Y88b    888    d888  888 888  Y88b/         8888 __  888    d888   i 888  888 888  888b 
+    /  Y88b   888    8888  888 888   Y88b         8888   | 888    8888   | 888  888 888  8888 
+   /____Y88b  888    Y888  888 888   /Y88b        Y888   | 888    Y888   ' 888  888 888  888P 
+  /      Y88b 888     "88_/888 888  /  Y88b        "88__/  888     "88_-~  "88_-888 888-_88"  
+  📣 Version BETA - Xlator & SkyX [ID FR] - Copyright© 2023                         88   
+*/
+
+/* 📃 Import all main fonts for the webapp : 📃 */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;900&display=swap');
+
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* 🎲 Personnalize scroll-bar CSS : 🎲 
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(49, 49, 49);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; 
+} */

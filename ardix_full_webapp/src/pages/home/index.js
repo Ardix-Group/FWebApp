@@ -11,7 +11,7 @@
 
 import { useEffect, useState } from "react";
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { logout, useAuth, upload } from "../config/FirebaseConfig.js";
+import { logout, useAuth, upload } from "../../config/FirebaseConfig.js";
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import UnknowPage from '../404.js';

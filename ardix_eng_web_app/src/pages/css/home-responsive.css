@@ -14,31 +14,6 @@
   #main_box .navbar { width: 94%; }
 }
 
-@media screen and (max-width: 1900px) {
-  #content_part {
-    margin-top: -130px;
-    margin-left: 0px;
-  }
-
-  #main_box .showing_box {
-    margin-right: 25px;
-  }
-}
-
-@media screen and (max-width: 1810px) {
-  #content_part {
-    grid-template-columns: repeat(2, 0fr);
-  }
-
-  #content_part {
-    margin-top: -230px;
-  }
-
-  #main_box .showing_box {
-    margin-right: 35px;
-  }
-}
-
 @media screen and (max-width: 1400px) {
   #main_box .navbar { width: 92%; }
 }

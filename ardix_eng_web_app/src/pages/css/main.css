@@ -12,9 +12,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;900&display=swap');
 
 * {
-    padding: 0px;
-    margin: 0px;
-    font-family: 'Inter', sans-serif;
+  padding: 0px;
+  margin: 0px;
+  font-family: 'Inter', sans-serif;
 }
 
 /* 🎲 Personnalize scroll-bar CSS : 🎲 

@@ -9,12 +9,13 @@
 .
 */
 
-import { useRef, useState } from "react";
 import { signup, login, useAuth } from "./config/FirebaseConfig.js";
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import $ from 'jquery';
 import { useEffect } from 'react';
+import { useState } from "react";
+import { useRef } from "react";
 
 export default function Home() {
   const { push } = useRouter();

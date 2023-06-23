@@ -9,7 +9,7 @@
 .
 */
 
-import { signup, login, useAuth } from "./config/FirebaseConfig.js";
+import { signup, login, useAuth } from "../config/FirebaseConfig.js";
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import $ from 'jquery';

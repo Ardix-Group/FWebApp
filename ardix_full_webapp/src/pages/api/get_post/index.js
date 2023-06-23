@@ -10,7 +10,7 @@
 */
 
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import app from "../../config/FirebaseConfig.js";
+import app from "../../../config/FirebaseConfig.js";
 
 const firestore = getFirestore(app);
 

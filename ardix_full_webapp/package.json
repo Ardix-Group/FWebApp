@@ -18,6 +18,8 @@
     "@mui/styled-engine-sc": "^5.12.0",
     "axios": "^1.4.0",
     "firebase": "^9.22.2",
+    "firebase-admin": "^11.9.0",
+    "fs": "^0.0.1-security",
     "jquery": "^3.7.0",
     "next": "13.2.4",
     "react": "18.2.0",

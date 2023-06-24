@@ -19,6 +19,8 @@ import axios from 'axios';
 export default function HomePage() {
     const currentUser = useAuth();
     const [data, setData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+
     /* ✨ Read test all data in the collection name indicated : ✨ */
     useEffect(() => {
         const getAllPost = async () => {
@@ -31,6 +33,12 @@ export default function HomePage() {
         };
     
         getAllPost();
+
+        const timer = setTimeout(() => {
+            setIsLoading(false);
+        }, 3000);
+        
+        return () => clearTimeout(timer);
     }, []);
 
     return (
@@ -42,35 +50,38 @@ export default function HomePage() {
                 <link rel="icon" href="https://zupimages.net/up/23/13/vzzn.png"/>
             </Head>
 
-            {!currentUser && <LoadingPage/>}
-            {currentUser && (
+            {isLoading ? (
+                <LoadingPage/>
+            ) : (
                 <>
-                    <div id="main_box">
-                        <p className="connected_status">✔ Connected to 187.18.131.19, server in France.</p>
-                        <NavBar/>
+                    {currentUser && (
+                        <div id="main_box">
+                            <p className="connected_status">✔ Connected to 187.18.131.19, server in France.</p>
+                            <NavBar/>
 
-                        <div id="content_part">
-                            {data && data.map((item, index) => (
-                                <div className="showing_box" key={index}>
-                                    <svg className="more_svg" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
-                                    <h1 className="post_title">{item.title}</h1>
-                                    <p className="post_description">{item.description}</p><br/>
+                            <div id="content_part">
+                                {data && data.map((item, index) => (
+                                    <div className="showing_box" key={index}>
+                                        <svg className="more_svg" viewBox="0 0 24 24" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                        <h1 className="post_title">{item.title}</h1>
+                                        <p className="post_description">{item.description}</p><br/>
 
-                                    <div className="img_list">
-                                        {item.images_uploaded.map((imageUrl, imageIndex) => (
-                                            <img src={imageUrl} key={imageIndex}/>
-                                        ))}
+                                        <div className="img_list">
+                                            {item.images_uploaded.map((imageUrl, imageIndex) => (
+                                                <img src={imageUrl} key={imageIndex}/>
+                                            ))}
+                                        </div>
+
+                                        <div className="authors_info">
+                                            <img src={item.authors_img} alt="Authors IMG"/>
+                                            <h3>{item.authors_name}</h3><br/>
+                                            <p className="info_span">This user is one of the first to join the platform ! ✨</p>
+                                        </div>
                                     </div>
-
-                                    <div className="authors_info">
-                                        <img src={item.authors_img} alt="Authors IMG"/>
-                                        <h3>{item.authors_name}</h3><br/>
-                                        <p className="info_span">This user is one of the first to join the platform ! ✨</p>
-                                    </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </>
             )}
         </>

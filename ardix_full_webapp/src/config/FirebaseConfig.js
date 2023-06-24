@@ -11,7 +11,7 @@
 
 import { useEffect, useState } from "react";
 import * as firebase from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile, updateEmail } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 /* 🦊 Firebase Variables Initial Config : 🦊 */
@@ -26,8 +26,8 @@ const firebaseConfig = {
 };
 
 const app = firebase.initializeApp(firebaseConfig);
-const auth = getAuth();
 const storage = getStorage();
+const auth = getAuth();
 export default app;
 
 export function signup(email, password, name) {
@@ -66,4 +66,26 @@ export async function upload(file, currentUser, setLoading) {
   setLoading(false);
   alert("Tout est bon : ta photo a bien été enregistrée ! 👋");
   window.location.reload();
+}
+
+/* 🙏 Update a new name : 🙏 */
+export function updateDisplayName(newDisplayName) {
+  updateProfile(auth.currentUser, {
+    displayName: newDisplayName
+  }).then(() => {
+    alert("Your display name is updated ! ✔");
+    window.location.reload();
+  }).catch((error) => {
+    console.log(error);
+  });
+}
+
+/* 📬 Update a new email : 📬 */
+export function updateUserEmail(newEmail) {
+  updateEmail(auth.currentUser, newEmail).then(() => {
+    alert("Your email is updated ! ✔");
+    window.location.reload();
+  }).catch((error) => {
+    console.log(error);
+  });
 }

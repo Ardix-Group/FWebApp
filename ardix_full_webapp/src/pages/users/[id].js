@@ -9,18 +9,17 @@
 .
 */
 
-import { getFirestore, collection, getDocs } from "firebase/firestore";
-import app from "../../../config/FirebaseConfig.js";
+/* 👨‍👧‍👦 Get User's Data with uid for UserPage : 👨‍👧‍👦 */
+import { useRouter } from 'next/router';
 
-const firestore = getFirestore(app);
+export default function UserPage() {
+  const router = useRouter();
+  const { id } = router.query;
 
-export default async function handler(req, res) {
-  const snapshot = await getDocs(collection(firestore, "post"));
-
-  const data = snapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
-
-  res.status(200).json(data);
+  return (
+    <div>
+      <h1>User Page</h1>
+      <p>URL id : {id}</p>
+    </div>
+  );
 }

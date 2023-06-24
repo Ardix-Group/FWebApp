@@ -10,8 +10,9 @@
 */
 
 import { useEffect, useState } from "react";
+import { updatePassword } from 'firebase/auth';
 import { getStorage, ref, uploadBytes, getDownloadURL, deleteObject } from 'firebase/storage';
-import { logout, useAuth, upload } from "../config/FirebaseConfig.js";
+import { logout, useAuth, upload, updateDisplayName, updateUserEmail, ResetPassword } from "../config/FirebaseConfig.js";
 import { useRouter } from 'next/navigation';
 import { getFirestore } from 'firebase/firestore';
 import { doc, setDoc } from "firebase/firestore";
@@ -33,7 +34,6 @@ import LoadingPage from "../pages/LoadingPage.js";
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
-  
     return (
       <div
         role="tabpanel"
@@ -228,6 +228,41 @@ export default function NavBar() {
         if (e.target.files[0]) { setPhoto(e.target.files[0]) }; 
     }
 
+    /* 🙏 Update a new name : 🙏 */
+    function UpdateName() {
+        var newDisplayName = prompt("📝 • Write your new name :");
+        if (newDisplayName === null) {
+            return;
+        } else {
+            updateDisplayName(newDisplayName);
+        }
+    }
+
+    /* 📬 Update a new email : 📬 */
+    function promptUpdateEmail() {
+        var newEmail = prompt("📬 • Write your new email :");
+        if (newEmail === null) {
+          return;
+        } else {
+          updateUserEmail(newEmail);
+        }
+    }  
+    
+    /* 💬 Change your password : 💬 */
+    function resetPassword() {
+        var newPassword = prompt("💬 • Write your new password :");
+        if (newPassword === null) {
+            return;
+        } else {
+            updatePassword(currentUser, newPassword).then(() => {
+                alert("Your password is updated ! ✔");
+                window.location.reload();
+            }).catch((error) => {
+             console.log(error);
+            });
+        }
+    }
+
     /* 💨 Simple function to Logout(); the actual user (in browser cookies) : 💨 */
     async function Logout() {
         setLoading(true);
@@ -252,8 +287,6 @@ export default function NavBar() {
             alert("On ne peut pas supprimer ta photo de profil : tu en as pas ! Mets en une et on verra après ! 🧐")
         }
     }
-
-    console.log(currentUser);
 
     return (
         <>{!currentUser && <LoadingPage/>}
@@ -408,6 +441,21 @@ export default function NavBar() {
                                             <button className="menu_button" onClick={RemovePhoto}>
                                                 <svg strokeLinecap="round" stroke="red" strokeLinejoin="round" className="icon"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
                                                 <p className="text"><font color="red">Remove your profile picture !</font></p>
+                                            </button>
+
+                                            <button className="menu_button" onClick={UpdateName}>
+                                                <svg strokeLinecap="round" strokeLinejoin="round" className="icon"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                                <p className="text">Update your name !</p>
+                                            </button>
+
+                                            <button className="menu_button" onClick={promptUpdateEmail}>
+                                                <svg strokeLinecap="round" strokeLinejoin="round" className="icon"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                                <p className="text">Update your email !</p>
+                                            </button>
+
+                                            <button className="menu_button" onClick={resetPassword}>
+                                                <svg strokeLinecap="round" strokeLinejoin="round" className="icon"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                                <p className="text">Change your password...</p>
                                             </button>
                                             
                                             <button id="back_button" className="menu_button">

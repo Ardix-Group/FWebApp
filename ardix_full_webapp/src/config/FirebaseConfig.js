@@ -11,7 +11,7 @@
 
 import { useEffect, useState } from "react";
 import * as firebase from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile, updateEmail } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, updateProfile, updateEmail, sendPasswordResetEmail } from "firebase/auth";
 import { getDownloadURL, getStorage, ref, uploadBytes } from 'firebase/storage';
 
 /* 🦊 Firebase Variables Initial Config : 🦊 */
@@ -86,6 +86,17 @@ export function updateUserEmail(newEmail) {
     alert("Your email is updated ! ✔");
     window.location.reload();
   }).catch((error) => {
+    console.log(error);
+  });
+}
+
+/* 📦 Send a change link password to currentUser : 📦 */
+export function changePasswordLink(prompt_email) {
+  sendPasswordResetEmail(auth, prompt_email)
+  .then(() => {
+    alert("The email with the password reset link was send ! ✔");
+  })
+  .catch((error) => {
     console.log(error);
   });
 }

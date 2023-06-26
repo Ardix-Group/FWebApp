@@ -150,10 +150,18 @@
     background-color: transparent!important;
 }
 
+.main_box .dyn_box #login_box .login_form .reset_button {
+    margin-top: 5px;
+    text-transform: none;
+    font-size: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
 .main_box .dyn_box .divider {
-    margin-top: 30px;
+    margin-top: 20px;
     color: rgb(146, 146, 146);
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     width: 85%;
 }
 
@@ -167,6 +175,7 @@
     font-size: 15px;
     background-color: black!important;
     text-transform: none;
+    margin-top: 5px;
 }
 
 .main_box .dyn_box #login_box .login_form #google_button {
@@ -257,6 +266,7 @@
     padding-bottom: 7px;
     background-color: black!important;
     text-transform: none;
+    margin-top: 5px;
 }
 
 .main_box .dyn_box #signup_box .signup_form #back_to_login:disabled {

@@ -19,6 +19,7 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { signup, login, useAuth } from "../config/FirebaseConfig.js";
 import Divider from '@mui/material/Divider';
 import $ from 'jquery';
+import { changePasswordLink } from "../config/FirebaseConfig.js";
 
 export default function Home() {
   const { push } = useRouter();
@@ -78,6 +79,13 @@ export default function Home() {
     }
   }
 
+  const handleForgotPassword = () => {
+    const prompt_email = prompt('Veuillez entrer votre adresse e-mail');
+    if (prompt_email) {
+      changePasswordLink(prompt_email);
+    }
+  };
+
   return (
     <>
       <Head>
@@ -116,9 +124,16 @@ export default function Home() {
 
               <LoadingButton id="login_button" onClick={handleLogin} loading={loading}>
                 <span>Login</span>
+              </LoadingButton><br/><br/>
+
+              <p className="indicator">Forgot password ?</p>
+              <LoadingButton id="login_button" className="reset_button" onClick={handleForgotPassword}>
+                <span>Reset my password ↺</span>
               </LoadingButton>
 
               <Divider className="divider">OR</Divider>
+
+              <p className="indicator">Don't have an account ?</p>
               <LoadingButton id="login_button_email" loading={loading}>
                 <span>Signup with Email &nbsp;→</span>
               </LoadingButton>
@@ -147,7 +162,6 @@ export default function Home() {
               <FormGroup>
                 <FormControlLabel control={<Checkbox checked={showPasswordSignup} onChange={handleCheckboxChangeSignup}/>} label="Show your actual password ! 👀"/>
                 <FormControlLabel required control={<Checkbox defaultChecked />} label="Accept our Terms of Service and Platform Rules."/>
-                <FormControlLabel control={<Checkbox/>} label="Remember me after login ?"/>
               </FormGroup><br/>
 
               <LoadingButton id="signup_button" onClick={handleSignup} loading={loading}>
@@ -155,6 +169,8 @@ export default function Home() {
               </LoadingButton>
 
               <Divider className="divider">OR</Divider>
+
+              <p className="indicator">You have already an account ?</p>
               <LoadingButton id="back_to_login" loading={loading}>
                 <span>←&nbsp; Back to the login page</span>
               </LoadingButton>

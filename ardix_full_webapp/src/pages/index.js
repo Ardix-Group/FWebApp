@@ -80,9 +80,11 @@ export default function Home() {
   }
 
   const handleForgotPassword = () => {
-    const prompt_email = prompt('Veuillez entrer votre adresse e-mail');
+    const prompt_email = prompt('📬 • Please enter your email associated with your account :');
     if (prompt_email) {
       changePasswordLink(prompt_email);
+    } else {
+      return;
     }
   };
 

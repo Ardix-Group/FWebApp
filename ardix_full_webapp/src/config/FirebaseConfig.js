@@ -98,5 +98,6 @@ export function changePasswordLink(prompt_email) {
   })
   .catch((error) => {
     console.log(error);
+    alert("There are no accounts associated with this email... 😪")
   });
 }

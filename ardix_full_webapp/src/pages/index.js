@@ -61,7 +61,10 @@ export default function Home() {
     setLoading(false);
   }
 
-  async function handleSignup() {    
+  async function handleSignup() {   
+    setLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 2000));
+     
     if ($("#input1").val() !== $("#input2").val()) {
       alert("Please check that the two passwords entered are the same... 😉");
     } else {

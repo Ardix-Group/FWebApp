@@ -9,44 +9,50 @@
 .
 */
 
-import { signup, login, useAuth } from "../config/FirebaseConfig.js";
+import { useState, useRef } from "react";
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
+import FormGroup from '@mui/material/FormGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { signup, login, useAuth } from "../config/FirebaseConfig.js";
+import Divider from '@mui/material/Divider';
 import $ from 'jquery';
-import { useEffect } from 'react';
-import { useState } from "react";
-import { useRef } from "react";
 
 export default function Home() {
   const { push } = useRouter();
-  const [ loading, setLoading ] = useState(false);
   const currentUser = useAuth();
   if (currentUser) { push('/home'); }
-  function showSignupPage() { $("#signup").fadeIn(600); $("#login").hide(); }
-  function showLoginPage() { $("#signup").hide(); $("#login").fadeIn(600); }
-
-  useEffect(() => {
-    $("#signup").hide(); $("#login").show(); 
-  }, []);
-
+  const [loading, setLoading] = useState(false);
   const emailRefLogin = useRef();
   const passwordRefLogin = useRef();
   const emailRefSignup = useRef();
   const passwordRefSignup = useRef();
   const nameRefSignup = useRef();
+  const [showPasswordLogin, setShowPasswordLogin] = useState(false);
+  const [showPasswordSignup, setShowPasswordSignup] = useState(false);
+  const handleCheckboxChangeSignup = () => { setShowPasswordSignup(!showPasswordSignup); };
+  const handleCheckboxChangeLogin = () => { setShowPasswordLogin(!showPasswordLogin); };
+  const featureNotExist = () => { alert("Sorry but this feature is not yet available ! 😪"); };
 
-  async function handleSignup() {
-    setLoading(true);
-    try {
-      await signup(emailRefSignup.current.value, passwordRefSignup.current.value, nameRefSignup.current.value);
-    } catch {
-      alert("Sorry, but an error has occurred ! Please try again... 🤨");
-    }
-    setLoading(false);
-  }
+  if (typeof document !== 'undefined') {
+    $(document).ready(function() {
+      $("#login_button_email").on("click", function() {
+        $("#signup_box").fadeIn(600);
+        $("#login_box").hide();
+      });
 
+      $("#back_to_login").on("click", function() {
+        $("#signup_box").hide();
+        $("#login_box").fadeIn(600);
+      });
+    });
+  } 
+  
   async function handleLogin() {
     setLoading(true);
+    await new Promise(resolve => setTimeout(resolve, 2000));
     try {
       await login(emailRefLogin.current.value, passwordRefLogin.current.value);
     } catch {
@@ -55,11 +61,18 @@ export default function Home() {
     setLoading(false);
   }
 
-  function ShowPassword() {
-    var x = document.getElementById("pass_one");
-    var y = document.getElementById("pass_two");
-    if (x.type === "password") { x.type = "text"; } else { x.type = "password"; }
-    if (y.type === "password") { y.type = "text"; } else { y.type = "password"; }
+  async function handleSignup() {    
+    if ($("#input1").val() !== $("#input2").val()) {
+      alert("Please check that the two passwords entered are the same... 😉");
+    } else {
+      setLoading(true);
+      try {
+        await signup(emailRefSignup.current.value, passwordRefSignup.current.value, nameRefSignup.current.value);
+      } catch {
+        alert("Sorry, but an error has occurred ! Please try again... 🤨");
+      }
+      setLoading(false);
+    }
   }
 
   return (
@@ -71,41 +84,81 @@ export default function Home() {
         <link rel="icon" href="https://zupimages.net/up/23/13/vzzn.png"/>
       </Head>
 
-      {/* 🎈 Simple App indicator on single page : 🎈 */}
-      <div className="ardix_indicator">
-        <img src="https://zupimages.net/up/23/13/vzzn.png" alt="app_logo_source"/>
-        <div className="whats_new">
-          <svg viewBox="0 0 24 24" fill="none" strokeLinecap="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-          <p>What's new on Ardix ? &nbsp;📣</p>
+      <div className="main_box">
+        <div className="template_design">
+          <div className="msg_box">
+            <h1>— The real future starts <span>here.</span></h1>
+            <p className="description_box">Ardix Group&copy; is the first private company to create a virtual and social world around electronics adapted...</p>
+          </div>
+        </div>
+
+        <div className="dyn_box">
+          <img className="app_logo" src="https://zupimages.net/up/23/13/vzzn.png" alt="project_logo"/>
+
+          <div id="login_box">
+            <h1 className="login_title">Hi ! Happy to see you again ! 👋</h1>
+            <p className="login_description">This is our login page : to access the full web application, please fill in the following fields.</p>
+
+            <div className="login_form">
+              <p className="indicator">Email :</p>
+              <input placeholder="JohnDoe@gmail.com" ref={emailRefLogin} type="text" alt="email_field"/><br/><br/>
+              <p className="indicator">Password :</p>
+              <input placeholder="TheM0stPassword$ecured" className="pass_input" ref={passwordRefLogin} type={showPasswordLogin ? 'text' : 'password'} alt="password_field"/><br/><br/>
+
+              <FormGroup>
+                <FormControlLabel control={<Checkbox checked={showPasswordLogin} onChange={handleCheckboxChangeLogin}/>} label="Show your actual password ! 👀"/>
+                <FormControlLabel required control={<Checkbox defaultChecked />} label="Accept our Terms of Service and Platform Rules."/>
+                <FormControlLabel control={<Checkbox/>} label="Remember me after login ?"/>
+              </FormGroup><br/>
+
+              <LoadingButton id="login_button" onClick={handleLogin} loading={loading}>
+                <span>Login</span>
+              </LoadingButton>
+
+              <Divider className="divider">OR</Divider>
+              <LoadingButton id="login_button_email" loading={loading}>
+                <span>Signup with Email &nbsp;→</span>
+              </LoadingButton>
+
+              <LoadingButton onClick={featureNotExist} id="google_button">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/2008px-Google_%22G%22_Logo.svg.png" alt="google-logo-app"/>
+                <span>Continue with Google</span>
+              </LoadingButton>
+            </div>
+          </div>
+
+          <div id="signup_box">
+            <h1 className="signup_title">Hi ! Welcome to Ardix ! 🤗</h1>
+            <p className="signup_description">This is our signup page : to create the best account, please fill in the following fields.</p>
+
+            <div className="signup_form">
+              <p className="indicator">Your full name (with spaces) :</p>
+              <input placeholder="John Doe" ref={nameRefSignup} type="text" alt="email_field"/><br/><br/>
+              <p className="indicator">Email :</p>
+              <input placeholder="JohnDoe@gmail.com" ref={emailRefSignup} type="text" alt="email_field"/><br/><br/>
+              <p className="indicator">Password :</p>
+              <input placeholder="TheM0stPassword$ecured" className="pass_input" id="input1" ref={passwordRefSignup} type={showPasswordSignup ? 'text' : 'password'} alt="password_field"/><br/><br/>
+              <p className="indicator">Repeat your password :</p>
+              <input placeholder="TheM0stPassword$ecured" className="pass_input" id="input2" type={showPasswordSignup ? 'text' : 'password'} alt="password_field"/><br/><br/>
+
+              <FormGroup>
+                <FormControlLabel control={<Checkbox checked={showPasswordSignup} onChange={handleCheckboxChangeSignup}/>} label="Show your actual password ! 👀"/>
+                <FormControlLabel required control={<Checkbox defaultChecked />} label="Accept our Terms of Service and Platform Rules."/>
+                <FormControlLabel control={<Checkbox/>} label="Remember me after login ?"/>
+              </FormGroup><br/>
+
+              <LoadingButton id="signup_button" onClick={handleSignup} loading={loading}>
+                <span>Signup</span>
+              </LoadingButton>
+
+              <Divider className="divider">OR</Divider>
+              <LoadingButton id="back_to_login" loading={loading}>
+                <span>←&nbsp; Back to the login page</span>
+              </LoadingButton>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="box_page">
-        {/* 🔑 Simple login page : 🔑 */}
-        <div id="login">
-          <h1 className="welcome_title">Welcome back to Ardix ! 👋</h1>
-          <p className="welcome_description">Here, the login and registration page to access the official webapp of the project. All your sessions will be recorded via the cookie policy...</p>
-          <input className="fleid_input" ref={emailRefLogin} placeholder="Your personnal email..." type="text"/><br/>
-          <input className="fleid_input" ref={passwordRefLogin} type="password" id="pass_one" placeholder="Your security password..."/><br/>
-          <label><input className="eye_checkbox" type="checkbox" onClick={ShowPassword}/>Show actual password ! 👀</label>
-          <button disabled={loading} onClick={handleLogin}>Get started !</button>
-          <p className="other_page_link">You do not have an account ? <br/><a onClick={showSignupPage} href="#">Go to the registration page...</a></p>
-        </div>
-
-        {/* ⚙ Simple register page : ⚙ */}
-        <div id="signup">
-          <h1 className="welcome_title">Do you know Ardix ? ✨</h1>
-          <p className="welcome_description">Here is the registration page to create a new account with the following form...</p>
-          <input className="fleid_input" ref={emailRefSignup} placeholder="Your personnal email..." type="text"/><br/>
-          <input className="fleid_input" type="text" ref={nameRefSignup} placeholder="Your first and/or last name..."/>
-          <input className="fleid_input" ref={passwordRefSignup} type="password" id="pass_two" placeholder="Your security password..."/><br/>
-          <label><input className="eye_checkbox" type="checkbox" onClick={ShowPassword}/>Show actual password ! 👀</label>
-          <button disabled={loading} onClick={handleSignup}>Register my account !</button>
-          <p className="other_page_link">You do have already an account ? <br/><a onClick={showLoginPage} href="#">Go to the login page...</a></p>
-        </div>
-      </div>
-
-      <div className="footer_page">Version BETA • Ardix Group • All rights reserved 2023&copy;</div>
     </>
   )
 }

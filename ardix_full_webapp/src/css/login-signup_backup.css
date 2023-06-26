@@ -1,0 +1,186 @@
+/* 
+       e                   888 ,e,                 e88~~\                                     
+      d8b     888-~\  e88~\888  "  Y88b  /        d888     888-~\  e88~-_  888  888 888-~88e  
+     /Y88b    888    d888  888 888  Y88b/         8888 __  888    d888   i 888  888 888  888b 
+    /  Y88b   888    8888  888 888   Y88b         8888   | 888    8888   | 888  888 888  8888 
+   /____Y88b  888    Y888  888 888   /Y88b        Y888   | 888    Y888   ' 888  888 888  888P 
+  /      Y88b 888     "88_/888 888  /  Y88b        "88__/  888     "88_-~  "88_-888 888-_88"  
+  📣 Version BETA - Xlator & SkyX [ID FR] - Copyright© 2023                         88   
+.
+*/
+
+.ardix_indicator {
+    padding-top: 17px;
+    padding-left: 25px;
+}
+
+.ardix_indicator img { width: 55px; }
+.ardix_indicator .whats_new {
+    background-color: rgb(234, 234, 234);
+    width: 250px;
+    padding-left: 20px;
+    padding-top: 11px;
+    padding-bottom: 12px;
+    border-radius: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -42px;
+}
+
+.ardix_indicator .whats_new svg {
+    stroke: rgb(44, 44, 44);
+    stroke-width: 2px;
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 12px;
+}
+
+.ardix_indicator .whats_new p { color: rgb(44, 44, 44); }
+.footer_page {
+    text-align: center;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
+    margin-bottom: 25px;
+    font-size: 14px;
+    color: gray;
+}
+
+/* 🛒 Login Section Style : 🛒*/
+.box_page {
+    margin-left: auto;
+    margin-right: auto;
+    width: 750px;
+    text-align: center;
+    margin-top: 80px;
+    border: solid 2px rgb(165, 165, 165);
+    border-radius: 25px;
+    padding-top: 30px;
+    padding-bottom: 35px;
+    box-shadow: 20px 15px 0px black;
+}
+
+.box_page .welcome_title {
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.box_page .welcome_description {
+    font-size: 14px;
+    width: 85%;
+    margin-left: auto;
+    margin-right: auto;
+    color: gray;
+    margin-bottom: 30px;
+}
+
+.box_page .fleid_input {
+    margin-bottom: 8px;
+    padding-top: 10px;
+    padding-bottom: 11px;
+    padding-left: 20px;
+    padding-right: 25px;
+    border-color: transparent;
+    border-radius: 20px;
+    background-color: rgb(229, 229, 229);
+    width: 50%;
+    outline: none;
+}
+
+label {
+    display: block;
+    padding-left: 15px;
+    text-indent: -15px;
+    font-size: 14px;
+    color: gray;
+}
+
+.box_page .eye_checkbox {
+    width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    vertical-align: bottom;
+    position: relative;
+    top: -1px;
+    overflow: hidden;
+    margin-right: 5px;
+}
+
+.box_page button {
+    margin-top: 30px;
+    padding-top: 12px;
+    padding-bottom: 16px;
+    padding-left: 45px;
+    padding-right: 45px;
+    border-color: transparent;
+    border-radius: 30px;
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    font-size: 15px;
+    transition: all 0.4s;
+}
+
+.box_page button:hover { transform: scale(1.05); }
+.box_page button:active { transform: scale(0.95); }
+
+.box_page .other_page_link {
+    font-size: 14px;
+    color: gray;
+    margin-top: 15px;
+}
+
+.box_page .other_page_link a { color: blue; }
+/* 🛒 End of Login Section Style ! 🛒*/
+
+/* 📱 Responsive Part Style : 📱 */
+@media only screen and (max-width: 815px) {
+    .ardix_indicator {
+        padding: 15px;
+    }
+
+    .ardix_indicator .whats_new {
+        margin-top: 30px;
+        margin-left: auto;
+        margin-left: auto;
+        font-size: 14px;
+        padding-top: 11px;
+    }
+
+    .box_page {
+        width: 78%;
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-left: 17px;
+        margin-top: 5px;
+        box-shadow: 12px 10px 0px black;
+        padding-top: 35px;
+    }
+
+    .box_page .welcome_title {
+        font-size: 35px;
+        line-height: 37px;
+        margin-bottom: 15px;
+    }
+
+    .box_page .welcome_description {
+        font-size: 14px;
+        width: 100%;
+    }
+
+    .box_page .fleid_input {
+        width: 85%;
+    }
+}
+
+@media only screen and (max-width: 455px) {
+    .footer_page {
+        width: 200px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        top: 94.5%;
+    }
+}
+/* 📱 End of Responsive Part Style ! 📱 */

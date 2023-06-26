@@ -21,7 +21,6 @@ export default function HomePage() {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
-    /* ✨ Read test all data in the collection name indicated : ✨ */
     useEffect(() => {
         const getAllPost = async () => {
           try {
